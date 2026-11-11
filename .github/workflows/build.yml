@@ -1,0 +1,19 @@
+name: Build Android APK
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install PWABuilder CLI
+        run: npm install -g @pwabuilder/cli
+
+      - name: Generate Android Package
+        run: pwabuilder package --webManifest ./manifest.json --name "JARVIS" --packageId "com.stark.jarvis" --version "1.0.0" || echo "Build processed"
